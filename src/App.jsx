@@ -5,11 +5,12 @@ function App() {
   const [fact, setFact] = useState('Loading an interesting fact...');
 
   // Function to fetch data from the free Numbers API
+  // Function to fetch data safely using a CORS proxy
   const fetchNumberFact = async () => {
     setFact('Loading...');
     try {
-      // Fetching a random math fact
-      const response = await fetch('http://numbersapi.com/random/math');
+      // We wrap the Numbers API URL inside the AllOrigins secure proxy URL
+      const response = await fetch('https://api.allorigins.win/raw?url=http://numbersapi.com/random/math');
       const data = await response.text();
       setFact(data);
     } catch (error) {
@@ -17,7 +18,6 @@ function App() {
       setFact('Oops! Could not fetch a fact right now.');
     }
   };
-
   // Fetch a fact immediately when the app loads
   useEffect(() => {
     fetchNumberFact();
